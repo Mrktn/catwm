@@ -1,7 +1,7 @@
 CFLAGS+= -Wall
-LDADD+= -lX11 
+LDADD+= -lxcb -lxcb-keysyms
 LDFLAGS=
-EXEC=catwm
+EXEC=catwm-xcb
 
 PREFIX?= /usr
 BINDIR?= $(PREFIX)/bin
@@ -10,11 +10,11 @@ CC=gcc
 
 all: $(EXEC)
 
-catwm: catwm.o
-	$(CC) $(LDFLAGS) -Os -o $@ $+ $(LDADD)
+catwm-xcb: catwm-xcb.o
+	$(CC) $(LDFLAGS) -Os -Wfatal-errors -o $@ $+ $(LDADD)
 
 install: all
-	install -Dm 755 catwm $(DESTDIR)$(BINDIR)/catwm
+	install -Dm 755 catwm-xcb $(DESTDIR)$(BINDIR)/catwm-xcb
 
 clean:
-	rm -f catwm *.o
+	rm -f catwm-xcb *.o
