@@ -7,7 +7,8 @@
  *  (          ))))))________________ Cute And Tiny Window Manager
  *  ______________________________________________________________________________
  *
- *  Copyright (c) 2010, Rinaldini Julien, julien.rinaldini@heig-vd.ch
+ *  Copyright (c) 2010, Julien Rinaldini, julien.rinaldini@heig-vd.ch
+ *  Copyright (c) 2016, Antoine Balestrat, antoine.balestrat<at>polytechnique.edu
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -33,15 +34,16 @@
 #define CONFIG_H
 
 // Mod (Mod1 == alt) and master size
-#define MOD             Mod1Mask
+#define MOD             XCB_MOD_MASK_1
 #define MASTER_SIZE     0.6
 
 // Colors
-#define FOCUS           "rgb:bc/57/66"
-#define UNFOCUS         "rgb:88/88/88"
+#define FOCUS           "#D64937"
+#define UNFOCUS         "#000000"
 
 const char* dmenucmd[] = {"dmenu_run",NULL};
 const char* urxvtcmd[] = {"urxvt",NULL};
+const char* killit[] =   {"pkill", "catwm-xcb", NULL};
 const char* lockcmd[]  = {"slock",NULL};
 const char* next[]     = {"ncmpcpp","next",NULL};
 const char* prev[]     = {"ncmpcpp","prev",NULL};
@@ -60,9 +62,9 @@ static struct key keys[] = {
     {  MOD,             XK_h,                       decrease,       {NULL}},
     {  MOD,             XK_l,                       increase,       {NULL}},
     {  MOD,             XK_x,                       kill_client,    {NULL}},
-    {  MOD,             XK_j,                       next_win,       {NULL}},
+    {  MOD,             XK_j,                       prev_win,       {NULL}},
     {  MOD,             XK_Tab,                     next_win,       {NULL}},
-    {  MOD,             XK_k,                       prev_win,       {NULL}},
+    {  MOD,             XK_k,                       spawn,          {.com = killit}},
     {  MOD|ShiftMask,   XK_j,                       move_up,        {NULL}},
     {  MOD|ShiftMask,   XK_k,                       move_down,      {NULL}},
     {  MOD,             XK_Return,                  swap_master,    {NULL}},
@@ -74,7 +76,7 @@ static struct key keys[] = {
     {  0,               XF86XK_AudioLowerVolume,    spawn,          {.com = voldown}},
     {  0,               XF86XK_AudioRaiseVolume,    spawn,          {.com = volup}},
     {  MOD,             XK_p,                       spawn,          {.com = dmenucmd}},
-    {  MOD|ShiftMask,   XK_Return,                  spawn,          {.com = urxvtcmd}},
+    {  MOD,             XK_u,                       spawn,          {.com = urxvtcmd}},
     {  MOD,             XK_Right,                   next_desktop,   {NULL}},
     {  MOD,             XK_Left,                    prev_desktop,   {NULL}},
        DESKTOPCHANGE(   XK_0,                                       0)
